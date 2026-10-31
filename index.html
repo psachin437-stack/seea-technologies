@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seea Technologies | IT & Electronics Services</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-blue-900 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-wider">SEEA TECHNOLOGIES</h1>
+            <div class="space-x-4">
+                <a href="#services" class="hover:text-blue-300">Services</a>
+                <a href="#enterprise" class="hover:text-blue-300">Enterprise Solutions</a>
+                <a href="#contact" class="hover:text-blue-300">Contact Us</a>
+                <button class="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 transition">Client Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-white text-center py-20 px-4 shadow-sm">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Empowering Your Business with Reliable IT Services</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Providing end-to-end IT & Electronics AMC, Manpower Deployment, and Industrial Web Applications for Corporate and Manufacturing sectors.</p>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services" class="container mx-auto py-16 px-4">
+        <h3 class="text-3xl font-bold text-center mb-10">Our Core Services</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-600">
+                <h4 class="text-xl font-bold mb-3">IT & Electronics AMC</h4>
+                <p class="text-gray-600">Comprehensive annual maintenance contracts for networks, servers, and industrial electronics to ensure zero downtime.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-600">
+                <h4 class="text-xl font-bold mb-3">Manpower Deployment</h4>
+                <p class="text-gray-600">Skilled IT engineers and support staff deployed at your premises with full compliance and strict NDA adherence.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-600">
+                <h4 class="text-xl font-bold mb-3">Industrial Automation</h4>
+                <p class="text-gray-600">Custom scripting, database architecture, and full-stack solutions tailored for manufacturing environments.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Solutions (Targeting 800+ Employee Companies) -->
+    <section id="enterprise" class="bg-blue-50 py-16 px-4">
+        <div class="container mx-auto">
+            <h3 class="text-3xl font-bold text-center mb-10">Enterprise Software Solutions</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white p-4 rounded shadow">✅ <strong>Visitor Gate Pass Portal:</strong> Secure entry/exit tracking system.</div>
+                <div class="bg-white p-4 rounded shadow">✅ <strong>Asset Management:</strong> Complete IT hardware inventory tracking.</div>
+                <div class="bg-white p-4 rounded shadow">✅ <strong>Vehicle Management System:</strong> Logistics and transport monitoring.</div>
+                <div class="bg-white p-4 rounded shadow">✅ <strong>MES Dashboards:</strong> Real-time production and operation metrics.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form connected to Supabase -->
+    <section id="contact" class="container mx-auto py-16 px-4 max-w-xl">
+        <h3 class="text-3xl font-bold text-center mb-8">Get In Touch</h3>
+        <form id="inquiryForm" class="bg-white p-8 rounded-lg shadow-lg">
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Company Name</label>
+                <input type="text" id="company" class="w-full border p-2 rounded" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Email Address</label>
+                <input type="email" id="email" class="w-full border p-2 rounded" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 font-bold mb-2">Requirement (AMC / Manpower)</label>
+                <textarea id="message" class="w-full border p-2 rounded h-24" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-blue-900 text-white font-bold py-3 rounded hover:bg-blue-800 transition">Send Inquiry</button>
+            <p id="formStatus" class="text-center mt-4 font-bold hidden"></p>
+        </form>
+    </section>
+
+    <!-- Supabase Integration Script -->
+    <script>
+        // અહીં તમારી Supabase વિગતો મૂકો
+        const SUPABASE_URL = 'https://lbuzyoemdlxiszqoawly.supabase.co/rest/v1/';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxidXp5b2VtZGx4aXN6cW9hd2x5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM0MzI3MzMsImV4cCI6MjEwOTAwODczM30.l_YzBkAXd2T3p9C5mlMwOG-7ekp2CYV3Va5mnJShFtY';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        document.getElementById('inquiryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const company = document.getElementById('company').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const statusText = document.getElementById('formStatus');
+
+            statusText.classList.remove('hidden');
+            statusText.innerText = 'Sending...';
+            statusText.classList.add('text-blue-600');
+
+            // 'client_inquiries' ટેબલમાં ડેટા ઇન્સર્ટ કરો
+            const { data, error } = await supabase
+                .from('client_inquiries')
+                .insert([{ company_name: company, email: email, message: message }]);
+
+            if (error) {
+                console.error('Error:', error);
+                statusText.innerText = 'Error submitting inquiry. Try again.';
+                statusText.classList.replace('text-blue-600', 'text-red-600');
+            } else {
+                statusText.innerText = 'Inquiry sent successfully! We will contact you soon.';
+                statusText.classList.replace('text-blue-600', 'text-green-600');
+                document.getElementById('inquiryForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>
